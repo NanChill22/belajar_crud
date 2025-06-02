@@ -1,8 +1,7 @@
 <?php
-include 'koneksi.php';
+require_once "classes/Mahasiswa.php";
+$mahasiswa = new Mahasiswa();
 
-$id = $_GET["id"];
-mysqli_query($conn, "DELETE FROM mahasiswa WHERE id=$id");
-
+$id = $_GET['id'];
+$mahasiswa->delete($id);
 header("Location: index.php");
-?>
