@@ -5,16 +5,18 @@ $mahasiswa = new Mahasiswa();
 $id = $_GET['id'];
 $data = $mahasiswa->getById($id);
 
-if (isset($_POST['submit'])) {
-    $nama = $_POST['nama'];
-    $nim = $_POST['nim'];
-    $jurusan = $_POST['jurusan'];
+if (!$data) die("Data tidak ditemukan");
 
-    if (!empty($nama) && is_numeric($nim) && preg_match("/^[a-zA-Z\s]+$/", $jurusan)) {
+if (isset($_POST['submit'])) {
+    $nama = trim($_POST['nama']);
+    $nim = trim($_POST['nim']);
+    $jurusan = trim($_POST['jurusan']);
+
+    if ($nama && is_numeric($nim) && preg_match("/^[a-zA-Z\s]+$/", $jurusan)) {
         $mahasiswa->update($id, $nama, $nim, $jurusan);
         header("Location: index.php");
     } else {
-        echo "Input tidak valid.";
+        echo "Input tidak valid!";
     }
 }
 ?>

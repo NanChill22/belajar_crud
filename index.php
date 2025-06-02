@@ -4,9 +4,9 @@ $mahasiswa = new Mahasiswa();
 $data = $mahasiswa->getAll();
 ?>
 
-<h2>Data Mahasiswa</h2>
+<h2>Data Mahasiswa (PDO)</h2>
 <a href="tambah.php">Tambah Data</a>
-<table border="1" cellpadding="10" cellspacing="0">
+<table border="1" cellpadding="10">
     <tr>
         <th>No</th>
         <th>Nama</th>
@@ -14,16 +14,16 @@ $data = $mahasiswa->getAll();
         <th>Jurusan</th>
         <th>Aksi</th>
     </tr>
-    <?php $i = 1; while ($row = $data->fetch_assoc()) : ?>
+    <?php $no = 1; foreach ($data as $row): ?>
     <tr>
-        <td><?= $i++; ?></td>
-        <td><?= $row["nama"]; ?></td>
-        <td><?= $row["nim"]; ?></td>
-        <td><?= $row["jurusan"]; ?></td>
+        <td><?= $no++ ?></td>
+        <td><?= htmlspecialchars($row['nama']) ?></td>
+        <td><?= htmlspecialchars($row['nim']) ?></td>
+        <td><?= htmlspecialchars($row['jurusan']) ?></td>
         <td>
-            <a href="edit.php?id=<?= $row["id"]; ?>">Edit</a> |
-            <a href="hapus.php?id=<?= $row["id"]; ?>" onclick="return confirm('Yakin hapus?')">Hapus</a>
+            <a href="edit.php?id=<?= $row['id'] ?>">Edit</a> |
+            <a href="hapus.php?id=<?= $row['id'] ?>" onclick="return confirm('Yakin hapus?')">Hapus</a>
         </td>
     </tr>
-    <?php endwhile; ?>
+    <?php endforeach ?>
 </table>

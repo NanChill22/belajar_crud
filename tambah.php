@@ -3,16 +3,15 @@ require_once "classes/Mahasiswa.php";
 $mahasiswa = new Mahasiswa();
 
 if (isset($_POST['submit'])) {
-    $nama = $_POST['nama'];
-    $nim = $_POST['nim'];
-    $jurusan = $_POST['jurusan'];
+    $nama = trim($_POST['nama']);
+    $nim = trim($_POST['nim']);
+    $jurusan = trim($_POST['jurusan']);
 
-    // Validasi sederhana
-    if (!empty($nama) && is_numeric($nim) && preg_match("/^[a-zA-Z\s]+$/", $jurusan)) {
+    if ($nama && is_numeric($nim) && preg_match("/^[a-zA-Z\s]+$/", $jurusan)) {
         $mahasiswa->tambah($nama, $nim, $jurusan);
         header("Location: index.php");
     } else {
-        echo "Input tidak valid.";
+        echo "Input tidak valid!";
     }
 }
 ?>

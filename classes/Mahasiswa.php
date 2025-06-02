@@ -2,34 +2,31 @@
 require_once "koneksi.php";
 
 class Mahasiswa extends Database {
-    
+
     public function getAll() {
-        $result = $this->conn->query("SELECT * FROM mahasiswa");
-        return $result;
+        $stmt = $this->conn->prepare("SELECT * FROM mahasiswa");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getById($id) {
         $stmt = $this->conn->prepare("SELECT * FROM mahasiswa WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function tambah($nama, $nim, $jurusan) {
         $stmt = $this->conn->prepare("INSERT INTO mahasiswa (nama, nim, jurusan) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $nama, $nim, $jurusan);
-        return $stmt->execute();
+        return $stmt->execute([$nama, $nim, $jurusan]);
     }
 
     public function update($id, $nama, $nim, $jurusan) {
-        $stmt = $this->conn->prepare("UPDATE mahasiswa SET nama=?, nim=?, jurusan=? WHERE id=?");
-        $stmt->bind_param("sssi", $nama, $nim, $jurusan, $id);
-        return $stmt->execute();
+        $stmt = $this->conn->prepare("UPDATE mahasiswa SET nama = ?, nim = ?, jurusan = ? WHERE id = ?");
+        return $stmt->execute([$nama, $nim, $jurusan, $id]);
     }
 
     public function delete($id) {
-        $stmt = $this->conn->prepare("DELETE FROM mahasiswa WHERE id=?");
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        $stmt = $this->conn->prepare("DELETE FROM mahasiswa WHERE id = ?");
+        return $stmt->execute([$id]);
     }
 }
